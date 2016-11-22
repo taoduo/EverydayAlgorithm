@@ -1,7 +1,9 @@
 package StillWaitToBeSolved;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -23,6 +25,7 @@ import java.util.Scanner;
  * https://www.hackerrank.com/contests/w25/challenges/stone-division
  */
 public class StoneDivision {
+    public static Map<Long, Boolean> memorize = new HashMap<>();
     public static void main(String...args) {
         Scanner scn = new Scanner(System.in);
         List<Long> s = new ArrayList<>();
@@ -53,9 +56,14 @@ public class StoneDivision {
     public static boolean solve(long n, List<Long> s) {
         // the the total number of divisions happen to n will be <even> * <whatever> + 1(this division)
         // the number is assured to be odd, then return true, "the number can have odd count of divisions"
+        if (memorize.get(n) != null) {
+          return memorize.get(n);
+        }
         for (long l : s) {
             // if the division can have odd division
-            if (n % l == 0 && !solve(n / l, s)) {
+            boolean temp = solve(n / l, s);
+            memorize.put(n / l, temp);
+            if (n % l == 0 && !temp) {
                 return true;
             }
         }
