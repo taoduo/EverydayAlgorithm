@@ -1,7 +1,8 @@
 package SolvedFirstTime;
 
 /**
- * Created by duotao on 12/10/16.
+ * Leetcode Problem
+ * https://leetcode.com/problems/regular-expression-matching/
  */
 public class RegularExpressionMatching {
   public static void main(String... args) {
