@@ -1,31 +1,30 @@
-package StillWaitToBeSolved;
+package DidnotSolveFirstTime;
 
 /**
  * Leetcode Contest Problem.
  * https://leetcode.com/contest/leetcode-weekly-contest-12/problems/ones-and-zeroes/
- * This is a BF method and got TLE. Can not DP, can not greedy. Do know how to solve yet.
+ * I used a BF method but I learned the DP algorithm from another person
+ * I thought DP does not work here but for this, I learned that DP can be useful even
+ * when the sequence matters
  */
 public class FindMaxForm {
   public static void main(String ...args) {
-    System.out.println(solve(new String[]{"10", "0001", "111001", "1", "0"}, 4, 3));
+    System.out.println(solve(new String[]{"10", "0", "1"}, 1, 1));
   }
 
   public static int solve(String[] strs, int m, int n) {
     int[][] pre = preprocess(strs);
-    return helper(pre, m, n, 0);
-  }
-
-  public static int helper(int[][] pre, int m, int n, int start) {
-    if ((m == 0 && n == 0) || start > pre.length - 1) {
-      return 0;
-    }
-    int max = 0;
-    for (int i = start; i < pre.length; i++) {
-      if (m - pre[i][0] >= 0 && n - pre[i][1] >= 0) {
-        max = Math.max(max, helper(pre, m - pre[i][0], n - pre[i][1], i + 1) + 1);
+    int[][] dp = new int[m + 1][n + 1]; // dp[i][j] means the max count with i 0 and j 1
+    for (int i = 0; i < pre.length; i++) {
+      for (int j = dp.length - 1; j >= 0; j--) {
+        for (int k = dp[0].length - 1; k >= 0; k--) {
+          if (j >= pre[i][0] && k >= pre[i][1]) {
+            dp[j][k] = Math.max(dp[j][k], dp[j - pre[i][0]][k - pre[i][1]] + 1);
+          }
+        }
       }
     }
-    return max;
+    return dp[m][n];
   }
 
   public static int[][] preprocess(String[] strs) {
