@@ -1,7 +1,7 @@
 package StillWaitToBeSolved;
 
 /**
- * Need O(n) DC solution
+ * O(n) DC solution & linear solution based on recursive relations
  * https://leetcode.com/problems/maximum-subarray/?tab=Description
  */
 public class MaxSubArray {
